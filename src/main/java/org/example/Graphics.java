@@ -9,25 +9,47 @@ import java.awt.event.KeyEvent;
 
 public class Graphics extends JPanel implements ActionListener {
 
-    static final int WIDTH = 800;
-    static final int HEIGHT = 800;
-    static final int TICK_SIZE = 50;
+
+    //private Food apple;
+    //private final JLabel status;
+
+    //private int foodX;
+    //private int foodY;
+
+    // Size of the Width from the Game Panel
+    static final int WIDTH = 700;
+
+    // Size of the Height from the Game Panel
+    static final int HEIGHT = 700;
+
+    // TICK SIZE = Size of the snake + apple
+    static final int TICK_SIZE = 30;
+
+    // Calculates the Board Size considering the Size of the Snake + Apple
     static final int BOARD_SIZE = (WIDTH * HEIGHT) / (TICK_SIZE * TICK_SIZE);
 
-    final Font font = new Font("TimesRoman", Font.BOLD, 30);
+    final Font font = new Font("Bauhaus 93", Font.BOLD, 22);
 
     int[] snakePosX = new int[BOARD_SIZE];
     int[] snakePosY = new int[BOARD_SIZE];
     int snakeLength;
 
+
     Food food;
+
+
     int foodEaten;
 
     char direction = 'R';
     boolean isMoving = false;
     final Timer timer = new Timer(150, this);
 
+
+
+
+
     public Graphics() {
+
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.setBackground(Color.WHITE);
         this.setFocusable(true);
@@ -82,15 +104,22 @@ public class Graphics extends JPanel implements ActionListener {
         super.paintComponent(g);
 
         if (isMoving) {
-            g.setColor(Color.BLUE);
-            g.fillOval(food.getPosX(), food.getPosY(), TICK_SIZE, TICK_SIZE);
 
-            g.setColor(Color.DARK_GRAY);
+            //Drawing the Apple
+            g.setColor(Color.RED);
+
+            // Draw the Apple and its form (Circle, Rectangle ...)
+            //g.fillRect(food.getPosX(), food.getPosY(), TICK_SIZE, TICK_SIZE);
+
+            g.drawImage(food.appleImg, food.getPosX(), food.getPosY(),null);
+
+            // Drawing the actual Snake
+            g.setColor(Color.GREEN);
             for (int i = 0; i < snakeLength; i++) {
                 g.fillRect(snakePosX[i], snakePosY[i], TICK_SIZE, TICK_SIZE);
             }
         } else {
-            String scoreText = String.format("The End... Score: %d... Press any key to play again!", foodEaten);
+            String scoreText = String.format("Game Over ... Score: %d ... Press any key to play again!", foodEaten);
             g.setColor(Color.BLACK);
             g.setFont(font);
             g.drawString(scoreText, (WIDTH - getFontMetrics(g.getFont()).stringWidth(scoreText)) / 2, HEIGHT / 2);
