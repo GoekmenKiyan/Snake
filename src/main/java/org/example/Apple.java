@@ -2,14 +2,12 @@ package org.example;
 
 import java.util.Random;
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
 
 
-public class Food {
+public class Apple {
 
     private final int posX;
     private final int posY;
@@ -17,9 +15,9 @@ public class Food {
     public BufferedImage appleImg;
 
 
-    public Food() {
-        posX = generatePos(Graphics.WIDTH);
-        posY = generatePos(Graphics.HEIGHT);
+    public Apple() {
+        posX = generatePos(Snake.BOARD_WIDTH);
+        posY = generatePos(Snake.BOARD_HEIGHT);
             try {
                 appleImg = ImageIO.read(new File("src/main/resources/images/applesnake.png"));
             } catch (IOException e) {
@@ -30,8 +28,9 @@ public class Food {
 
     private int generatePos(int size) {
         Random random = new Random();
-        return random.nextInt(size / Graphics.TICK_SIZE) * Graphics.TICK_SIZE;
+        return random.nextInt(size / Snake.TICK_SIZE) * Snake.TICK_SIZE;
     }
+
 
     public int getPosX() {
         return posX;
