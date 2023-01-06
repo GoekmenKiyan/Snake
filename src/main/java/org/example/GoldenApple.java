@@ -19,7 +19,7 @@ public class GoldenApple {
         posX = generatePos(Snake.BOARD_WIDTH);
         posY = generatePos(Snake.BOARD_HEIGHT);
         try {
-            GoldenAppleImg = ImageIO.read(new File("src/main/resources/images/goldenapple.png"));
+            GoldenAppleImg = ImageIO.read(new File("src/main/resources/images/appleGolden.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,7 @@
 package org.example;
 
+import jdk.jshell.ImportSnippet;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -31,14 +33,10 @@ public class Snake extends JPanel implements ActionListener {
     static final int BOARD_SIZE = (BOARD_WIDTH * BOARD_HEIGHT) / (TICK_SIZE * TICK_SIZE);
 
 
-    private boolean instructionsClicked; // Checking whether instructions button has been clicked
-
 
     /**
      * Font for End Screen
      */
-
-    //final Font font = new Font("New Times Roman", Font.BOLD, 25);
     Font arcadeClassic;
 
 
@@ -51,9 +49,6 @@ public class Snake extends JPanel implements ActionListener {
     int[] snakePosY = new int[BOARD_SIZE];
     int snakeLength;
 
-
-    private static BufferedImage gameOverImg;
-    private static BufferedImage instructionsImg;
 
 
     /**
@@ -104,9 +99,10 @@ public class Snake extends JPanel implements ActionListener {
         catch(IOException | FontFormatException e){
         }
 
+
         this.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
-        Color grass = new Color(169, 209, 167);
-        this.setBackground(grass);
+        //Color grass = new Color(169, 209, 167);
+        //this.setBackground(grass);
         this.setFocusable(true);
 
 
@@ -162,28 +158,12 @@ public class Snake extends JPanel implements ActionListener {
         speed.start();
     }
 
-    public void instructions() {
-        instructionsClicked = true;
-        isMoving = false;
-    }
 
 
     // Print the Apples on the GameBoard
     @Override
     protected void paintComponent(java.awt.Graphics g) {
         super.paintComponent(g);
-
-        if (instructionsClicked) { // If Instructions clicked, draw instructions image
-            g.drawImage(instructionsImg, 50, 100, 500, 200, null);
-        } else if ((!isMoving)) { //if instructions NOT clicked
-                                  //and NOT playing, draw game over image
-            g.drawImage(gameOverImg, 50, 100, 500, 200, null);
-        } else { //if playing or reload/save clicked
-                 //draw snake, first apple, and first golden apple
-            //Snake.draw(g);
-            //Apple.draw(g);
-            //GoldenApple.draw(g);
-        }
 
         if (isMoving) {
 

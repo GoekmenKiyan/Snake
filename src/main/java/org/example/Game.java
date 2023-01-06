@@ -13,6 +13,13 @@ public class Game extends JFrame {
         // Create Icon for the Program
         ImageIcon logo = new ImageIcon("res/snakeIcon.png");
 
+
+        /**
+         * https://stackoverflow.com/questions/27675814/center-align-the-title-in-jframe
+         * Code below has been taken from StackOverflow:
+         * The title of the Program will be represented in the middle of the Top Window
+         */
+
         this.setSize(600,300);
         this.setFont(new Font("System", Font.PLAIN, 14));
         Font f = this.getFont();
@@ -25,6 +32,7 @@ public class Game extends JFrame {
         //for (int i=0; i!=w; i++) pad +=" ";
         pad = String.format("%"+w+"s", pad);
         this.setTitle(pad+"S N A K E   by   Ueberraschungseffekt");
+
 
         this.add(new Snake());
         //this.setTitle("S N A K E");
