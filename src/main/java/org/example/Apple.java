@@ -19,7 +19,7 @@ public class Apple {
         posX = generatePos(Snake.BOARD_WIDTH);
         posY = generatePos(Snake.BOARD_HEIGHT);
             try {
-                appleImg = ImageIO.read(new File("src/main/resources/images/applesnake.png"));
+                appleImg = ImageIO.read(new File("src/main/resources/images/applePixel.png"));
             } catch (IOException e) {
                 e.printStackTrace();
             }

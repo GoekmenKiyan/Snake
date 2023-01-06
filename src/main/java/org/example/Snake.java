@@ -25,7 +25,7 @@ public class Snake extends JPanel implements ActionListener {
     static final int BOARD_HEIGHT = 700;
 
     // TICK SIZE = Size of the snake + apple
-    static final int TICK_SIZE = 30;
+    static final int TICK_SIZE = 25;
 
     // Calculates the Board Size considering the Size of the Snake + Apple
     static final int BOARD_SIZE = (BOARD_WIDTH * BOARD_HEIGHT) / (TICK_SIZE * TICK_SIZE);
@@ -38,7 +38,9 @@ public class Snake extends JPanel implements ActionListener {
      * Font for End Screen
      */
 
-    final Font font = new Font("New Times Roman", Font.BOLD, 25);
+    //final Font font = new Font("New Times Roman", Font.BOLD, 25);
+    Font arcadeClassic;
+
 
 
     /**
@@ -79,7 +81,7 @@ public class Snake extends JPanel implements ActionListener {
     boolean isMoving = false;
 
     // Timer = Speed of the Snake on the GameBoard
-    Timer speed = new Timer(120, this);
+    Timer speed = new Timer(70, this);
 
 
 
@@ -90,19 +92,24 @@ public class Snake extends JPanel implements ActionListener {
 
     public Snake() {
 
+        /**
+         * https://www.youtube.com/watch?v=43duJsYmhxQ
+         * Using Custom Font in this Java Program
+         */
+        try{
+            arcadeClassic = Font.createFont(Font.TRUETYPE_FONT, new File("PixelMplus10-Regular.ttf")).deriveFont(25f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("PixelMplus10-Regular.ttf")));
+        }
+        catch(IOException | FontFormatException e){
+        }
+
         this.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
         Color grass = new Color(169, 209, 167);
         this.setBackground(grass);
         this.setFocusable(true);
 
 
-        // Try to read Images
-        try {
-            gameOverImg = ImageIO.read(new File("images/gameover.jpg"));
-            instructionsImg = ImageIO.read(new File("images/instructions.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
         // This key listener allows the snake to move as long as an arrow key
@@ -199,10 +206,14 @@ public class Snake extends JPanel implements ActionListener {
             }
         } else {
             // Print Text after colliding with wall / losing the game
-            String scoreText = String.format("Game Over ... Score: %d ... Press any key to play again!", foodEaten);
+            String gameOverText = " Game Over \n";
+            String pressKeyText = "Press SPACE to play again! \n";
+            String scoreText = String.format("Score: %d", foodEaten);
             g.setColor(Color.BLACK);
-            g.setFont(font);
-            g.drawString(scoreText, (BOARD_WIDTH - getFontMetrics(g.getFont()).stringWidth(scoreText)) / 2, BOARD_HEIGHT / 2);
+            g.setFont(arcadeClassic);
+            g.drawString(gameOverText,(BOARD_WIDTH - getFontMetrics(g.getFont()).stringWidth(gameOverText)) / 2, BOARD_HEIGHT / 4);
+            g.drawString(scoreText, (BOARD_WIDTH - getFontMetrics(g.getFont()).stringWidth(scoreText)) / 2, BOARD_HEIGHT / 3);
+            g.drawString(pressKeyText, (BOARD_WIDTH - getFontMetrics(g.getFont()).stringWidth(pressKeyText)) / 2, BOARD_HEIGHT / 2);
         }
     }
 
