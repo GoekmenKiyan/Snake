@@ -1,5 +1,6 @@
 package org.example;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Snake extends JPanel implements ActionListener {
 
@@ -27,6 +30,8 @@ public class Snake extends JPanel implements ActionListener {
     // Calculates the Board Size considering the Size of the Snake + Apple
     static final int BOARD_SIZE = (BOARD_WIDTH * BOARD_HEIGHT) / (TICK_SIZE * TICK_SIZE);
 
+
+    private boolean instructionsClicked; // Checking whether instructions button has been clicked
 
 
     /**
@@ -85,12 +90,20 @@ public class Snake extends JPanel implements ActionListener {
 
     public Snake() {
 
-        Color grass = new Color(169, 209, 167);
-        setBackground(grass);
-
         this.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
-        this.setBackground(Color.WHITE);
+        Color grass = new Color(169, 209, 167);
+        this.setBackground(grass);
         this.setFocusable(true);
+
+
+        // Try to read Images
+        try {
+            gameOverImg = ImageIO.read(new File("images/gameover.jpg"));
+            instructionsImg = ImageIO.read(new File("images/instructions.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         // This key listener allows the snake to move as long as an arrow key
         // is pressed, by changing the snake's velocity accordingly. (The begin
@@ -142,11 +155,28 @@ public class Snake extends JPanel implements ActionListener {
         speed.start();
     }
 
+    public void instructions() {
+        instructionsClicked = true;
+        isMoving = false;
+    }
+
 
     // Print the Apples on the GameBoard
     @Override
     protected void paintComponent(java.awt.Graphics g) {
         super.paintComponent(g);
+
+        if (instructionsClicked) { // If Instructions clicked, draw instructions image
+            g.drawImage(instructionsImg, 50, 100, 500, 200, null);
+        } else if ((!isMoving)) { //if instructions NOT clicked
+                                  //and NOT playing, draw game over image
+            g.drawImage(gameOverImg, 50, 100, 500, 200, null);
+        } else { //if playing or reload/save clicked
+                 //draw snake, first apple, and first golden apple
+            //Snake.draw(g);
+            //Apple.draw(g);
+            //GoldenApple.draw(g);
+        }
 
         if (isMoving) {
 
@@ -163,7 +193,7 @@ public class Snake extends JPanel implements ActionListener {
             g.drawImage(GoldenApple.GoldenAppleImg, GoldenApple.getPosX(), GoldenApple.getPosY(), null);
 
             // Drawing the actual Snake
-            g.setColor(Color.GREEN);
+            g.setColor(Color.BLACK);
             for (int i = 0; i < snakeLength; i++) {
                 g.fillRect(snakePosX[i], snakePosY[i], TICK_SIZE, TICK_SIZE);
             }
