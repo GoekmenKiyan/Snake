@@ -93,6 +93,7 @@ public class Snake extends JPanel implements ActionListener {
 
     // Variable to count how many Apples have been eaten
     int applesEaten;
+    int goldenApplesEaten;
 
 
 
@@ -191,6 +192,7 @@ public class Snake extends JPanel implements ActionListener {
         // Setting the Starting Size of the Snake
         snakeLength = 5;
         applesEaten = 0;
+        goldenApplesEaten = 0;
         // Select which direction the snake should face when starting the application
         direction = 'R';
         isMoving = true;
@@ -222,7 +224,7 @@ public class Snake extends JPanel implements ActionListener {
             // Print Text after colliding with wall / losing the game
             String gameOverText = " Game Over \n";
             String pressKeyText = "Press SPACE to play again! \n";
-            String scoreText = String.format("Score: %d", applesEaten);
+            String scoreText = String.format("Score: %d", (applesEaten + goldenApplesEaten));
             g.setColor(Color.BLACK);
             g.setFont(arcadeClassic);
             g.drawString(gameOverText,(BOARD_WIDTH - getFontMetrics(g.getFont()).stringWidth(gameOverText)) / 2, BOARD_HEIGHT / 4);
@@ -240,7 +242,7 @@ public class Snake extends JPanel implements ActionListener {
 
         sound.setFile(i);
         sound.play();
-        sound.loop();
+        //sound.loop();
     }
 
     public void stopMusic() {
@@ -306,13 +308,14 @@ public class Snake extends JPanel implements ActionListener {
         if ((snakePosX[0] == GoldenApple.getPosX()) && (snakePosY[0] == GoldenApple.getPosY())) {
             snakeLength = snakeLength + 3;
             //speed = new Timer(20, this);
-            applesEaten++;
+            goldenApplesEaten = goldenApplesEaten + 3;
             // Plays "Eating" SoundEffect, which is in Array [0]
             playSE(0);
             spawnFood();
 
         }
     }
+
 
 
     public void collisionTest() {
