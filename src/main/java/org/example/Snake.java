@@ -1,17 +1,17 @@
 package org.example;
 
-import jdk.jshell.ImportSnippet;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
+/**
+ * Main Class for the Game itself
+ */
 
 public class Snake extends JPanel implements ActionListener {
 
@@ -34,6 +34,14 @@ public class Snake extends JPanel implements ActionListener {
 
 
 
+
+    Sound sound = new Sound();
+
+
+
+
+
+
     /**
      * Font for End Screen
      */
@@ -41,25 +49,42 @@ public class Snake extends JPanel implements ActionListener {
 
 
 
+
+
+
+
     /**
      * Array for Snake Position
      */
 
+    // PosX can only be inside of the BoardSize
     int[] snakePosX = new int[BOARD_SIZE];
+
+    // PosX can only be inside of the BoardSize
     int[] snakePosY = new int[BOARD_SIZE];
     int snakeLength;
 
 
 
+
+
+
+
+
     /**
-     * Apple Variables
+     * Define Instance Variables for the Game Objects
      */
 
     // Define Variable
-    Apple apple;
+    private Apple apple;
 
     // Define Variable
-    GoldenApple GoldenApple;
+    private GoldenApple GoldenApple;
+
+
+
+
+
 
 
     /**
@@ -67,9 +92,12 @@ public class Snake extends JPanel implements ActionListener {
      */
 
     // Variable to count how many Apples have been eaten
-    int foodEaten;
-    // Variable to count how many Golden Apples have been eaten
-    int GoldenFoodEaten;
+    int applesEaten;
+
+
+
+
+
 
 
     char direction = 'R';
@@ -81,11 +109,18 @@ public class Snake extends JPanel implements ActionListener {
 
 
 
+
+
+
+
     /**
      * Actual Snake including movement + consumables and what happens
      */
 
     public Snake() {
+
+
+
 
         /**
          * https://www.youtube.com/watch?v=43duJsYmhxQ
@@ -101,16 +136,16 @@ public class Snake extends JPanel implements ActionListener {
 
 
         this.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
-        //Color grass = new Color(169, 209, 167);
-        //this.setBackground(grass);
+        Color grass = new Color(169, 209, 167);
+        this.setBackground(grass);
         this.setFocusable(true);
 
 
 
-
-        // This key listener allows the snake to move as long as an arrow key
-        // is pressed, by changing the snake's velocity accordingly. (The begin
-        // method below actually moves the snake.)
+        /**
+         * The KeyListener below moves the Snake according
+         * to the currently pressed ArrowKey.
+         */
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -146,12 +181,17 @@ public class Snake extends JPanel implements ActionListener {
         start();
     }
 
-    protected void start() {
+    public void start() {
+
+        // Plays the Background Music
+        // playMusic(2);
+
         snakePosX = new int[BOARD_SIZE];
         snakePosY = new int[BOARD_SIZE];
+        // Setting the Starting Size of the Snake
         snakeLength = 5;
-        foodEaten = 0;
-        GoldenFoodEaten = 0;
+        applesEaten = 0;
+        // Select which direction the snake should face when starting the application
         direction = 'R';
         isMoving = true;
         spawnFood();
@@ -162,16 +202,10 @@ public class Snake extends JPanel implements ActionListener {
 
     // Print the Apples on the GameBoard
     @Override
-    protected void paintComponent(java.awt.Graphics g) {
-        super.paintComponent(g);
+    public void paintComponent(java.awt.Graphics g) {
+        super.paintComponent(g); // To change body of generated methods
 
         if (isMoving) {
-
-            //Drawing the Apple
-            //g.setColor(Color.RED);
-
-            // Draw the Apple and its form (Circle, Rectangle ...)
-            //g.fillRect(food.getPosX(), food.getPosY(), TICK_SIZE, TICK_SIZE);
 
             // Draw Image of red/normal Apple
             g.drawImage(apple.appleImg, apple.getPosX(), apple.getPosY(),null);
@@ -182,13 +216,13 @@ public class Snake extends JPanel implements ActionListener {
             // Drawing the actual Snake
             g.setColor(Color.BLACK);
             for (int i = 0; i < snakeLength; i++) {
-                g.fillRect(snakePosX[i], snakePosY[i], TICK_SIZE, TICK_SIZE);
+                g.fillOval(snakePosX[i], snakePosY[i], TICK_SIZE, TICK_SIZE);
             }
         } else {
             // Print Text after colliding with wall / losing the game
             String gameOverText = " Game Over \n";
             String pressKeyText = "Press SPACE to play again! \n";
-            String scoreText = String.format("Score: %d", foodEaten);
+            String scoreText = String.format("Score: %d", applesEaten);
             g.setColor(Color.BLACK);
             g.setFont(arcadeClassic);
             g.drawString(gameOverText,(BOARD_WIDTH - getFontMetrics(g.getFont()).stringWidth(gameOverText)) / 2, BOARD_HEIGHT / 4);
@@ -198,8 +232,34 @@ public class Snake extends JPanel implements ActionListener {
     }
 
 
-    // Move the Snake
-    protected void move() {
+    /**
+     * Creating/Implementing Methods to play Music for different occasions
+     */
+
+    public void playMusic(int i) {
+
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic() {
+
+        sound.stop();
+    }
+
+    public void playSE(int i) {
+
+        sound.setFile(i);
+        sound.play();
+    }
+
+
+
+    /**
+     * Moving Mechanism of the Snake
+     */
+    public void move() {
         for (int i = snakeLength; i > 0; i--) {
             snakePosX[i] = snakePosX[i-1];
             snakePosY[i] = snakePosY[i-1];
@@ -214,8 +274,11 @@ public class Snake extends JPanel implements ActionListener {
     }
 
 
-    // Spawn/Print the Apples
-    protected void spawnFood() {
+
+    /**
+     * Spawn/Print the Apples
+     */
+    public void spawnFood() {
         // Print normal/red Apple
         apple = new Apple();
         // Print special/golden Apple
@@ -223,27 +286,36 @@ public class Snake extends JPanel implements ActionListener {
     }
 
 
-    // Increase the length of the Snake after eating an Apple + print a new one
-    protected void eatFood() {
+    /**
+     * Increase the length of the Snake after eating an Apple + print a new one
+     */
+    public void eatApple() {
         if ((snakePosX[0] == apple.getPosX()) && (snakePosY[0] == apple.getPosY())) {
             snakeLength++;
-            foodEaten++;
+            applesEaten++;
+            // Plays "Eating" SoundEffect, which is in Array [0]
+            playSE(0);
             spawnFood();
         }
     }
 
-    // Increase Length of the Snake after eating a Golden Apple
-    protected void eatGoldenFood() {
+    /**
+     * Increase Length of the Snake after eating a Golden Apple
+     */
+    public void eatGoldenApple() {
         if ((snakePosX[0] == GoldenApple.getPosX()) && (snakePosY[0] == GoldenApple.getPosY())) {
             snakeLength = snakeLength + 3;
             //speed = new Timer(20, this);
-            GoldenFoodEaten++;
+            applesEaten++;
+            // Plays "Eating" SoundEffect, which is in Array [0]
+            playSE(0);
             spawnFood();
+
         }
     }
 
 
-    protected void collisionTest() {
+    public void collisionTest() {
         for (int i = snakeLength; i > 0; i--) {
             if ((snakePosX[0] == snakePosX[i]) && (snakePosY[0] == snakePosY[i])) {
                 isMoving = false;
@@ -257,8 +329,11 @@ public class Snake extends JPanel implements ActionListener {
 
         if (!isMoving) {
             speed.stop();
+            // Plays Death Sound
+            playSE(1);
         }
     }
+
 
 
     @Override
@@ -266,8 +341,8 @@ public class Snake extends JPanel implements ActionListener {
         if (isMoving) {
             move();
             collisionTest();
-            eatFood();
-            eatGoldenFood();
+            eatApple();
+            eatGoldenApple();
         }
 
         repaint();
