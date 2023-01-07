@@ -9,10 +9,10 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
+
 /**
  * Main Class for the Game itself
  */
-
 public class Snake extends JPanel implements ActionListener {
 
 
@@ -33,8 +33,9 @@ public class Snake extends JPanel implements ActionListener {
     static final int BOARD_SIZE = (BOARD_WIDTH * BOARD_HEIGHT) / (TICK_SIZE * TICK_SIZE);
 
 
-
-
+    /**
+     * Instance variable for Sound
+     */
     Sound sound = new Sound();
 
 

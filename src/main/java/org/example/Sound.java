@@ -8,8 +8,12 @@ import javax.sound.sampled.FloatControl;
 
 public class Sound {
 
+    /**
+     * https://www.youtube.com/watch?v=nUHh_J2Acy8
+     */
+
     Clip clip;
-    URL soundURL[] = new URL[30];
+    URL soundURL[] = new URL[10];
 
     public Sound() {
 
