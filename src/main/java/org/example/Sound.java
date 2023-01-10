@@ -10,11 +10,15 @@ public class Sound {
 
     /**
      * https://www.youtube.com/watch?v=nUHh_J2Acy8
+     * This Class was entirely created using this Youtube Video
      */
 
     Clip clip;
     URL soundURL[] = new URL[10];
 
+    /**
+     * Creating an Array with all the Soundfiles
+     */
     public Sound() {
 
         soundURL[0] = getClass().getResource("/Sounds/audios_eat.wav");
@@ -22,6 +26,9 @@ public class Sound {
         soundURL[2] = getClass().getResource("/Sounds/8bitsoundtrack.wav");
     }
 
+    /**
+     * Selecting a Sound from the Array
+     */
     public void setFile(int i) {
 
         try {

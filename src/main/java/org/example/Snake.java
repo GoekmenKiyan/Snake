@@ -137,6 +137,7 @@ public class Snake extends JPanel implements ActionListener {
         }
 
 
+        // Create the Background of the GameBoard in a specific color
         this.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
         Color grass = new Color(169, 209, 167);
         this.setBackground(grass);
@@ -183,6 +184,10 @@ public class Snake extends JPanel implements ActionListener {
         start();
     }
 
+
+    /**
+     * All the Methods that get called up, when starting the game
+     */
     public void start() {
 
         // Plays the Background Music
@@ -202,8 +207,9 @@ public class Snake extends JPanel implements ActionListener {
     }
 
 
-
-    // Print the Apples on the GameBoard
+    /**
+     * Print the Snake and Apples on the GameBoard
+     */
     @Override
     public void paintComponent(java.awt.Graphics g) {
         super.paintComponent(g); // To change body of generated methods
@@ -238,7 +244,6 @@ public class Snake extends JPanel implements ActionListener {
     /**
      * Creating/Implementing Methods to play Music for different occasions
      */
-
     public void playMusic(int i) {
 
         sound.setFile(i);
@@ -260,7 +265,8 @@ public class Snake extends JPanel implements ActionListener {
 
 
     /**
-     * Moving Mechanism of the Snake
+     * Moving Mechanism of the Snake:
+     * i.E: When moving to the right, the Snake loses one tick at the end and adds one tick at the head of the snake
      */
     public void move() {
         for (int i = snakeLength; i > 0; i--) {
@@ -318,19 +324,22 @@ public class Snake extends JPanel implements ActionListener {
     }
 
 
-
+    /**
+     * Method, to see what happens when Snake moves into Wall
+     */
     public void collisionTest() {
+        // Method when Snake moves into itself
         for (int i = snakeLength; i > 0; i--) {
             if ((snakePosX[0] == snakePosX[i]) && (snakePosY[0] == snakePosY[i])) {
                 isMoving = false;
                 break;
             }
         }
-
+        // When Snake moves against wall
         if (snakePosX[0] < 0 || snakePosX[0] > BOARD_WIDTH - TICK_SIZE || snakePosY[0] < 0 || snakePosY[0] > BOARD_HEIGHT - TICK_SIZE) {
             isMoving = false;
         }
-
+        // When Snake dies
         if (!isMoving) {
             speed.stop();
             // Plays Death Sound
@@ -339,7 +348,9 @@ public class Snake extends JPanel implements ActionListener {
     }
 
 
-
+    /**
+     * Everything to happen, when Snake is alive and moving on the GameBoard
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (isMoving) {
