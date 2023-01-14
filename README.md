@@ -1,4 +1,4 @@
-# SnakeSwingV1
+# SnakeSwing
 
 This is the first Version of our Snake Game using Java Swing!
 
