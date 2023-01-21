@@ -24,7 +24,7 @@ public class Apple {
      */
     public Apple() {
         // Generate a random x-Coordinate to place the Apple within the GameBoard
-        posX = generatePos(Snake.BOARD_WIDTH);
+        posX = generatePos(500);
         // Generate a random x-Coordinate to place the Apple within the GameBoard
         posY = generatePos(Snake.BOARD_HEIGHT);
             try {

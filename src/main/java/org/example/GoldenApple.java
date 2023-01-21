@@ -22,7 +22,7 @@ public class GoldenApple {
      * Method for the GoldenApple
      */
     public GoldenApple() {
-        posX = generatePos(Snake.BOARD_WIDTH);
+        posX = generatePos(500);
         posY = generatePos(Snake.BOARD_HEIGHT);
         try {
             GoldenAppleImg = ImageIO.read(new File("src/main/resources/images/appleGolden.png"));

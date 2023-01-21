@@ -15,6 +15,7 @@ import java.io.IOException;
  */
 public class Snake extends JPanel implements ActionListener {
 
+    static final Button start = new Button("Start"), help = new Button("Help"), new_game = new Button("New Game"), about = new Button("About"), pausee = new Button("Pause"), play = new Button("Play");
 
     /**
      * Game constants
@@ -123,6 +124,36 @@ public class Snake extends JPanel implements ActionListener {
 
 
 
+        //Buttons action listener
+        start.addActionListener(this);
+        new_game.addActionListener(this);
+        help.addActionListener(this);
+        about.addActionListener(this);
+        pausee.addActionListener(this);
+        play.addActionListener(this);
+
+
+        //Buttons Positions
+        start.setBounds(900, 230,120,70);
+        pausee.setBounds(900, 230,120,70);
+        play.setBounds(900, 230,120,70);
+        new_game.setBounds(900, 350,120,70);
+        help.setBounds(600, 480,120,70);
+        about.setBounds(900,600,120,70);
+
+
+        new_game.setFont(new Font("Georgia", Font.PLAIN, 24));
+        new_game.setVisible(false);
+        pausee.setVisible(false);
+        play.setVisible(false);
+
+
+        add(start);
+        add(help);
+        add(new_game);
+        add(about);
+        add(pausee);
+        add(play);
 
         /**
          * https://www.youtube.com/watch?v=43duJsYmhxQ
@@ -204,6 +235,9 @@ public class Snake extends JPanel implements ActionListener {
         isMoving = true;
         spawnFood();
         speed.start();
+        start.setVisible(false);
+        pausee.setVisible(true);
+        new_game.setVisible(true);
     }
 
 
@@ -213,6 +247,7 @@ public class Snake extends JPanel implements ActionListener {
     @Override
     public void paintComponent(java.awt.Graphics g) {
         super.paintComponent(g); // To change body of generated methods
+        Graphics2D gd = (Graphics2D) g;
 
         if (isMoving) {
 
@@ -222,10 +257,15 @@ public class Snake extends JPanel implements ActionListener {
             // Draw Image of Golden/special Apple
             g.drawImage(GoldenApple.GoldenAppleImg, GoldenApple.getPosX(), GoldenApple.getPosY(), null);
 
+            //Line between Game Play stage & Button Panel
+            gd.setColor(Color.red);
+            gd.setStroke(new BasicStroke(7));
+            gd.drawLine(550, 700, 550, 0);
+
             // Drawing the actual Snake
             g.setColor(Color.BLACK);
             for (int i = 0; i < snakeLength; i++) {
-                g.fillOval(snakePosX[i], snakePosY[i], TICK_SIZE, TICK_SIZE);
+                g.fillRect(snakePosX[i], snakePosY[i], TICK_SIZE, TICK_SIZE);
             }
         } else {
             // Print Text after colliding with wall / losing the game
@@ -335,8 +375,8 @@ public class Snake extends JPanel implements ActionListener {
                 break;
             }
         }
-        // When Snake moves against wall
-        if (snakePosX[0] < 0 || snakePosX[0] > BOARD_WIDTH - TICK_SIZE || snakePosY[0] < 0 || snakePosY[0] > BOARD_HEIGHT - TICK_SIZE) {
+        // When Snake moves against wall    Fenster Breite                                         Fenster Höhe
+        if (snakePosX[0] < 0 || snakePosX[0] > 550 - TICK_SIZE || snakePosY[0] < 0 || snakePosY[0] > 700 - TICK_SIZE) {
             isMoving = false;
         }
         // When Snake dies
@@ -345,6 +385,20 @@ public class Snake extends JPanel implements ActionListener {
             // Plays Death Sound
             playSE(1);
         }
+    }
+
+
+    //Play Button Logic
+    void play(){
+        play.setVisible(false);
+        pausee.setVisible(true);
+        speed.start();
+    }
+    //Pause Button Logic
+    void pause() {
+        play.setVisible(true);
+        pausee.setVisible(false);
+        speed.stop();
     }
 
 
@@ -361,5 +415,31 @@ public class Snake extends JPanel implements ActionListener {
         }
 
         repaint();
+
+        if(e.getSource() == start)
+            start();
+
+        if(e.getSource() == new_game){
+            start();
+            repaint();
+        }
+
+        if(e.getSource() == about){
+            if(new_game.isVisible() && pausee.isVisible())
+                pause();
+            new About();
+        }
+
+        if(e.getSource() == help){
+            if(new_game.isVisible() && pausee.isVisible())
+                pause();;
+            new Help();
+        }
+
+        if(e.getSource() == pausee)
+            pause();
+
+        if(e.getSource() == play)
+            play();
     }
 }
