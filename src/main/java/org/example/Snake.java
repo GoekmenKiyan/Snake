@@ -17,6 +17,7 @@ public class Snake extends JPanel implements ActionListener {
 
     static final Button start = new Button("Start"), help = new Button("Help"), new_game = new Button("New Game"), about = new Button("About"), pausee = new Button("Pause"), play = new Button("Play");
 
+
     /**
      * Game constants
      */
@@ -122,7 +123,13 @@ public class Snake extends JPanel implements ActionListener {
 
     public Snake() {
 
-
+        //Buttons Positions
+        start.setBounds(900, 230,120,70);
+        pausee.setBounds(900, 230,120,70);
+        play.setBounds(900, 230,120,70);
+        new_game.setBounds(900, 350,120,70);
+        help.setBounds(300, 480,120,70);
+        about.setBounds(900,600,120,70);
 
         //Buttons action listener
         start.addActionListener(this);
@@ -132,14 +139,6 @@ public class Snake extends JPanel implements ActionListener {
         pausee.addActionListener(this);
         play.addActionListener(this);
 
-
-        //Buttons Positions
-        start.setBounds(900, 230,120,70);
-        pausee.setBounds(900, 230,120,70);
-        play.setBounds(900, 230,120,70);
-        new_game.setBounds(900, 350,120,70);
-        help.setBounds(600, 480,120,70);
-        about.setBounds(900,600,120,70);
 
 
         new_game.setFont(new Font("Georgia", Font.PLAIN, 24));
@@ -257,10 +256,16 @@ public class Snake extends JPanel implements ActionListener {
             // Draw Image of Golden/special Apple
             g.drawImage(GoldenApple.GoldenAppleImg, GoldenApple.getPosX(), GoldenApple.getPosY(), null);
 
+
             //Line between Game Play stage & Button Panel
             gd.setColor(Color.red);
             gd.setStroke(new BasicStroke(7));
             gd.drawLine(550, 700, 550, 0);
+
+            //Score Text on Top Right Corner with Live Updates
+            gd.setColor(new Color(19, 56, 5));
+            gd.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
+            gd.drawString("Score: " + (applesEaten + goldenApplesEaten), 620 ,30);
 
             // Drawing the actual Snake
             g.setColor(Color.BLACK);

@@ -24,6 +24,7 @@ public class Sound {
         soundURL[0] = getClass().getResource("/Sounds/audios_eat.wav");
         soundURL[1] = getClass().getResource("/Sounds/audios_died.wav");
         soundURL[2] = getClass().getResource("/Sounds/8bitsoundtrack.wav");
+        soundURL[3] = getClass().getResource("/Sounds/click.wav");
     }
 
     /**
