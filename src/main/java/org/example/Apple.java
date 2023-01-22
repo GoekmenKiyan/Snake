@@ -6,18 +6,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-
 public class Apple {
-
     private final int posX;
     private final int posY;
-
 
     /**
      * Variable for the Image of the Red Apple
      */
     public BufferedImage appleImg;
-
 
     /**
      * Method for the Apple
@@ -33,7 +29,6 @@ public class Apple {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
     }
 
     /**
@@ -43,7 +38,6 @@ public class Apple {
         Random random = new Random();
         return random.nextInt(size / Snake.TICK_SIZE) * Snake.TICK_SIZE;
     }
-
 
     /**
      * Getter Methods for the X and Y Positions

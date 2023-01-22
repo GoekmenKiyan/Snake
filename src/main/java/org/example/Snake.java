@@ -9,7 +9,6 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
-
 /**
  * Main Class for the Game itself
  */
@@ -39,6 +38,7 @@ public class Snake extends JPanel implements ActionListener {
      * Custom Font
      */
     Font arcadeClassic;
+    Font arcadeClassic2;
 
     /**
      * Array for Snake Position
@@ -62,7 +62,6 @@ public class Snake extends JPanel implements ActionListener {
     /**
      * Game consumables
      */
-
     // Variable to count how many Apples have been eaten
     int applesEaten;
     int goldenApplesEaten;
@@ -73,15 +72,12 @@ public class Snake extends JPanel implements ActionListener {
 
     // Timer = Speed of the Snake on the GameBoard
     Timer speed = new Timer(70, this);
-
     final static Image logo = new ImageIcon("src/main/resources/images/FHCampus.png").getImage();
-
 
     /**
      * Buttons
      */
     static final Button start = new Button("Start"), help = new Button("Help"), new_game = new Button("New Game"), about = new Button("About"), pausee = new Button("Pause"), play = new Button("Play");
-
 
     /**
      * Actual Snake including movement + consumables and what happens
@@ -95,6 +91,14 @@ public class Snake extends JPanel implements ActionListener {
          */
         try{
             arcadeClassic = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/Font/PixelMplus10-Regular.ttf")).deriveFont(20f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/Font/PixelMplus10-Regular.ttf")));
+        }
+        catch(IOException | FontFormatException e){
+        }
+
+        try{
+            arcadeClassic2 = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/Font/PixelMplus10-Regular.ttf")).deriveFont(25f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/Font/PixelMplus10-Regular.ttf")));
         }
@@ -117,13 +121,10 @@ public class Snake extends JPanel implements ActionListener {
         pausee.addActionListener(this);
         play.addActionListener(this);
 
-
-
         new_game.setFont(arcadeClassic);
         new_game.setVisible(false);
         pausee.setVisible(false);
         play.setVisible(false);
-
 
         add(start);
         add(help);
@@ -140,7 +141,6 @@ public class Snake extends JPanel implements ActionListener {
         setFocusable(true);
         setBackground(new Color(169, 209, 167));
         setLayout(null);
-
 
         /**
          * The KeyListener below moves the Snake according
@@ -181,12 +181,10 @@ public class Snake extends JPanel implements ActionListener {
         start();
     }
 
-
     /**
      * All the Methods that get called up, when starting the game
      */
     public void start() {
-
 
         snakePosX = new int[BOARD_SIZE];
         snakePosY = new int[BOARD_SIZE];
@@ -204,9 +202,8 @@ public class Snake extends JPanel implements ActionListener {
         new_game.setVisible(true);
     }
 
-
     /**
-     * Print the Snake and Apples on the GameBoard
+     * Print the Snake, Apples and Background
      */
     @Override
     public void paintComponent(java.awt.Graphics g) {
@@ -233,9 +230,13 @@ public class Snake extends JPanel implements ActionListener {
         // Logo on Top Right Corner
         gd.drawImage(logo, 578,90,null);
 
+        //Score Text on Top Right Corner with Live Updates
+        gd.setColor(new Color(19, 56, 5));
+        gd.setFont(arcadeClassic2);
+        gd.drawString("Score: " + (applesEaten + goldenApplesEaten), 574 ,40);
+
 
         if (isMoving) {
-
 
             // Draw Image of red/normal Apple
             g.drawImage(apple.appleImg, apple.getPosX(), apple.getPosY(),null);
@@ -244,48 +245,32 @@ public class Snake extends JPanel implements ActionListener {
             g.drawImage(GoldenApple.GoldenAppleImg, GoldenApple.getPosX(), GoldenApple.getPosY(), null);
 
 
-            //Score Text on Top Right Corner with Live Updates
-            gd.setColor(new Color(19, 56, 5));
-            gd.setFont(arcadeClassic);
-            gd.drawString("Score: " + (applesEaten + goldenApplesEaten), 590 ,40);
-
             // Drawing the actual Snake
-            g.setColor(Color.BLACK);
+            g.setColor(new Color(0x1E91EF));
             for (int i = 0; i < snakeLength; i++) {
                 g.fillRect(snakePosX[i], snakePosY[i], TICK_SIZE, TICK_SIZE);
             }
-
-
         } else {
             // Print Text after colliding with wall / losing the game
             String gameOverText = " Game Over \n";
-            String pressKeyText = "Press SPACE to play again! \n";
+            String pressKeyText = "Press SPACE or NEW GAME to play again! \n";
             String scoreText = String.format("Score: %d", (applesEaten + goldenApplesEaten));
             g.setColor(Color.BLACK);
-            g.setFont(arcadeClassic);
+            g.setFont(arcadeClassic2);
             g.drawString(gameOverText,(553 - getFontMetrics(g.getFont()).stringWidth(gameOverText)) / 2, BOARD_HEIGHT / 4);
             g.drawString(scoreText, (553 - getFontMetrics(g.getFont()).stringWidth(scoreText)) / 2, BOARD_HEIGHT / 3);
             g.drawString(pressKeyText, (553 - getFontMetrics(g.getFont()).stringWidth(pressKeyText)) / 2, BOARD_HEIGHT / 2);
         }
     }
 
-
     /**
      * Creating/Implementing Methods to play Music for different occasions
      */
-
-    public void stopMusic() {
-
-        sound.stop();
-    }
-
     public void playSE(int i) {
 
         sound.setFile(i);
         sound.play();
     }
-
-
 
     /**
      * Moving Mechanism of the Snake:
@@ -305,8 +290,6 @@ public class Snake extends JPanel implements ActionListener {
         }
     }
 
-
-
     /**
      * Spawn/Print the Apples
      */
@@ -316,7 +299,6 @@ public class Snake extends JPanel implements ActionListener {
         // Print special/golden Apple
         GoldenApple = new GoldenApple();
     }
-
 
     /**
      * Increase the length of the Snake after eating an Apple + print a new one
@@ -345,7 +327,6 @@ public class Snake extends JPanel implements ActionListener {
         }
     }
 
-
     /**
      * Method, to see what happens when Snake moves into Wall
      */
@@ -369,7 +350,6 @@ public class Snake extends JPanel implements ActionListener {
         }
     }
 
-
     //Play Button Logic
     void play(){
         play.setVisible(false);
@@ -382,7 +362,6 @@ public class Snake extends JPanel implements ActionListener {
         pausee.setVisible(false);
         speed.stop();
     }
-
 
     /**
      * Everything to happen, when Snake is alive and moving on the GameBoard

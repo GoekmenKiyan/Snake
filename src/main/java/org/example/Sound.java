@@ -12,9 +12,8 @@ public class Sound {
      * https://www.youtube.com/watch?v=nUHh_J2Acy8
      * This Class was entirely created using this Youtube Video
      */
-
     Clip clip;
-    URL soundURL[] = new URL[10];
+    URL soundURL[] = new URL[5];
 
     /**
      * Creating an Array with all the Soundfiles
@@ -23,8 +22,7 @@ public class Sound {
 
         soundURL[0] = getClass().getResource("/Sounds/audios_eat.wav");
         soundURL[1] = getClass().getResource("/Sounds/audios_died.wav");
-        soundURL[2] = getClass().getResource("/Sounds/8bitsoundtrack.wav");
-        soundURL[3] = getClass().getResource("/Sounds/click.wav");
+        soundURL[2] = getClass().getResource("/Sounds/click.wav");
     }
 
     /**
@@ -33,7 +31,6 @@ public class Sound {
     public void setFile(int i) {
 
         try {
-
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
             clip = AudioSystem.getClip();
             clip.open(ais);
@@ -47,12 +44,10 @@ public class Sound {
     }
 
     public void play() {
-
         clip.start();
     }
 
     public void stop() {
-
         clip.stop();
     }
 }

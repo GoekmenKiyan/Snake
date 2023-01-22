@@ -1,8 +1,5 @@
 package org.example;
 
-/* Button class
-
- */
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -10,7 +7,6 @@ import java.io.IOException;
 
 public class Button extends JButton {
     Font arcadeClassic;
-
     Button(String text){
 
         /**
@@ -31,5 +27,4 @@ public class Button extends JButton {
         setBackground(new Color(225, 225, 217));
         setForeground(Color.black);
     }
-
 }

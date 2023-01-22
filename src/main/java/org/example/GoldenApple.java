@@ -6,9 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-
 public class GoldenApple {
-
     private final int posX;
     private final int posY;
 
@@ -16,7 +14,6 @@ public class GoldenApple {
      * Variable for the Image of the Golden Apple
      */
     public BufferedImage GoldenAppleImg;
-
 
     /**
      * Method for the GoldenApple
@@ -29,7 +26,6 @@ public class GoldenApple {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -39,7 +35,6 @@ public class GoldenApple {
         Random random = new Random();
         return random.nextInt(size / Snake.TICK_SIZE) * Snake.TICK_SIZE;
     }
-
 
     /**
      * Getter Methods for the X and Y Positions
