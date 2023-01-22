@@ -5,44 +5,31 @@ package org.example;
  */
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 
-public class Button extends JButton implements MouseListener{
+public class Button extends JButton {
+    Font arcadeClassic;
 
     Button(String text){
+
+        /**
+         * https://www.youtube.com/watch?v=43duJsYmhxQ
+         * Using Custom Font in this Java Program
+         */
+        try{
+            arcadeClassic = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/Font/PixelMplus10-Regular.ttf")).deriveFont(25f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/Font/PixelMplus10-Regular.ttf")));
+        }
+        catch(IOException | FontFormatException e){
+        }
+
         setText(text);
-        setFont(new Font("Georgia", Font.PLAIN, 25));
+        setFont(arcadeClassic);
         setFocusable(false);
-        setBackground(new Color(170, 215, 81));
+        setBackground(new Color(225, 225, 217));
         setForeground(Color.black);
-        addMouseListener(this);
-        // setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        //Audio clicked = new Audio("src/sounds/click.wav");
-        //clicked.audio.start();
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
 }

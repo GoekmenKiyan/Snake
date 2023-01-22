@@ -51,11 +51,6 @@ public class Sound {
         clip.start();
     }
 
-    public void loop() {
-
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
-    }
-
     public void stop() {
 
         clip.stop();
