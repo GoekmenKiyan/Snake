@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class About extends JFrame {
-    final static Image about = new ImageIcon("src/main/resources/images/about.png").getImage();
+    Image about = new ImageIcon("src/main/resources/images/about.png").getImage();
+    Image icon = new ImageIcon("src/main/resources/images/snakeIcon.png").getImage();
     About() {
 
         setSize(600, 600);
@@ -12,6 +13,8 @@ public class About extends JFrame {
         setLayout(null);
         setLocationRelativeTo(null);
         setVisible(true);
+        setTitle("ABOUT");
+        setIconImage(icon);
     }
 
     public void paint(Graphics g){

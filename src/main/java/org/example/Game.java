@@ -5,7 +5,7 @@ public class Game extends JFrame {
     public Game() {
 
         // Create Icon for the Program
-        ImageIcon logo = new ImageIcon("res/snakeIcon.png");
+        ImageIcon logo = new ImageIcon("src/main/resources/images/snakeIcon.png");
 
         this.add(new Snake());
         this.setTitle("S N A K E");
