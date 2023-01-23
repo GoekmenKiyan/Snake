@@ -9,8 +9,9 @@ import javax.sound.sampled.FloatControl;
 public class Sound {
 
     /**
+     * The following lines of Code have been taken from the Internet
      * https://www.youtube.com/watch?v=nUHh_J2Acy8
-     * This Class was entirely created using this Youtube Video
+     * last visit: 23.01.2023
      */
     Clip clip;
     URL soundURL[] = new URL[5];
@@ -45,9 +46,5 @@ public class Sound {
 
     public void play() {
         clip.start();
-    }
-
-    public void stop() {
-        clip.stop();
     }
 }

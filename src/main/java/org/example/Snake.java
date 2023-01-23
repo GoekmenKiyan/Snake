@@ -86,7 +86,9 @@ public class Snake extends JPanel implements ActionListener {
     public Snake() {
 
         /**
+         * The following 94-108 lines of Code have been taken from the Internet
          * https://www.youtube.com/watch?v=43duJsYmhxQ
+         * last visit: 23.01.2023
          * Using Custom Font in this Java Program
          */
         try{
