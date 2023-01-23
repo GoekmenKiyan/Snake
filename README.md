@@ -1,4 +1,4 @@
-# **Snake**
+# Snake
 
 ### A School Project developed by Team Überraschungseffekt
 
