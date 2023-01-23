@@ -24,19 +24,24 @@ A School Project, developed by Team Überraschungseffekt using Java Swing.
 ## Screenshots
 
 ***User Interface***
+
 ![Main](https://user-images.githubusercontent.com/114345541/214053150-5e7c9fe7-3fab-4e49-8dad-3643f3935551.png)
 
 
 ***About Window***
+
 ![About](https://user-images.githubusercontent.com/114345541/214053039-7d39fa1c-5b1c-4c74-ba6e-f0cc4300e19c.png)
 
 
 ***Help Window***
+
 ![Help](https://user-images.githubusercontent.com/114345541/214053182-c5a14e8f-d152-4e22-9459-802c0e51b95f.png)
 
 
 ***Game Over Screen***
+
 ![Game Over](https://user-images.githubusercontent.com/114345541/214053204-443439ad-796e-475f-853e-5440d53399f7.png)
+
 ## Authors
 
 - [@Gökmen Kiyan](https://github.com/GoekmenKiyan)
